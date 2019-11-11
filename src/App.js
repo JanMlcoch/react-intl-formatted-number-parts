@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedNumberParts, IntlProvider } from 'react-intl';
+import IntlPolyfill from 'react-intl-polyfill';
 
 const renderParts = (source, parts) => {
   console.log('parts with', source, parts);
@@ -12,9 +13,10 @@ const renderParts = (source, parts) => {
 };
 
 const intl = () => {
+  console.log(Intl.NumberFormat.prototype)
   const number = 123456;
   const intlFormattedParts =
-    new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
+    new Intl.NumberFormat('en', { style: 'currency', currency: 'EUR' })
       .formatToParts(number);
   return (
     <div>
@@ -26,17 +28,19 @@ const intl = () => {
 function App () {
   return (
     <IntlProvider locale={navigator.language}>
-      <div className="App">
-        <h1>React intl number parts formatter examples</h1>
-        <div>
-          {intl()}
+      <IntlPolyfill locale={navigator.language}>
+        <div className="App">
+          <h1>React intl number parts formatter examples</h1>
+          <div>
+            {intl()}
+          </div>
+          <div>
+            <FormattedNumberParts value={78901} style='currency' currency={'EUR'}>
+              {parts => renderParts('react-intl <FormattedNumberParts> component', parts)}
+            </FormattedNumberParts>
+          </div>
         </div>
-        <div>
-          <FormattedNumberParts value={78901} style='currency' currency={'EUR'}>
-            {parts => renderParts('react-intl <FormattedNumberParts> component', parts)}
-          </FormattedNumberParts>
-        </div>
-      </div>
+      </IntlPolyfill>
     </IntlProvider>
   );
 }
