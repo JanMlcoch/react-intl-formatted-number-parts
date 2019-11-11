@@ -3,8 +3,12 @@ import { FormattedNumberParts, IntlProvider } from 'react-intl';
 
 const renderParts = (source, parts) => {
   console.log('parts with', source, parts);
-  return parts.map((part, index) =>
-    <span key={source + part + index}>{part.value}</span>);
+  return (
+    <div>
+      <h2>{source}</h2>
+      {parts.map((part, index) => <span key={source + part + index}>{part.value}</span>)}
+    </div>
+  );
 };
 
 const intl = () => {
@@ -14,7 +18,7 @@ const intl = () => {
       .formatToParts(number);
   return (
     <div>
-      {renderParts('intl', intlFormattedParts)}
+      {renderParts('Intl .formatToParts', intlFormattedParts)}
     </div>
   )
 };
@@ -23,12 +27,13 @@ function App () {
   return (
     <IntlProvider locale={navigator.language}>
       <div className="App">
+        <h1>React intl number parts formatter examples</h1>
         <div>
           {intl()}
         </div>
         <div>
-          <FormattedNumberParts value={78901} style='currency' currency={'CZK'}>
-            {parts => renderParts('react-intl', parts)}
+          <FormattedNumberParts value={78901} style='currency' currency={'EUR'}>
+            {parts => renderParts('react-intl <FormattedNumberParts> component', parts)}
           </FormattedNumberParts>
         </div>
       </div>

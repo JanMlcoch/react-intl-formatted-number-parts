@@ -2,7 +2,12 @@ import 'react-app-polyfill/ie11';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker'
+
+// if (!Intl.RelativeTimeFormat) {
+//   require('@formatjs/intl-relativetimeformat/polyfill');
+//   require('@formatjs/intl-relativetimeformat/dist/locale-data/de'); // Add locale data for de
+// }
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
