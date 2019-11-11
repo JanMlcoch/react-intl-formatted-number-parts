@@ -1,35 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { FormattedNumberParts, IntlProvider } from 'react-intl';
+
+const renderParts = (source, parts) => {
+  console.log('parts with', source, parts);
+  return parts.map((part, index) =>
+    <span key={source + part + index}>{part.value}</span>);
+};
+
+const intl = () => {
+  const number = 123456;
+  const intlFormattedParts =
+    new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
+      .formatToParts(number);
+  return (
+    <div>
+      {renderParts('intl', intlFormattedParts)}
+    </div>
+  )
+};
 
 function App () {
   return (
     <IntlProvider locale={navigator.language}>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <div>
-            <FormattedNumberParts value={123453} style='currency' currency={'CZK'}>
-              {parts => {
-                console.log(parts);
-                return parts.map(part => <span>{part.value}</span>)
-              }}
-            </FormattedNumberParts>
-          </div>
-
-        </header>
+        <div>
+          {intl()}
+        </div>
+        <div>
+          <FormattedNumberParts value={78901} style='currency' currency={'CZK'}>
+            {parts => renderParts('react-intl', parts)}
+          </FormattedNumberParts>
+        </div>
       </div>
     </IntlProvider>
   );
